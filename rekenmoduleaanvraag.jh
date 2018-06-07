@@ -1,0 +1,272 @@
+
+/**
+ * Assesment  
+ * This is the credit scoring entity which will contain all criteria in order to come to a judgement.
+ * Criteria known so far:
+ *  - Scorecard result
+ *  - BKR scoring 
+ * Results in:
+ *  - Jugment of Request assesment.
+ * Algorithme for making the judgement.
+ * 07-07-2018 Jan Hartman:
+ * TODO: figure out how jugment is done on the creteria.
+*/
+entity Assesment {
+	Boolean Judgement
+}
+
+
+
+/**
+ * Request from Rekenmodule.
+ * AanvraagBericht: Input xml file containing request(s) for financing a car.
+ * The request and the assesment of the request are tightly bonded.
+*/
+entity RekenmoduleAanvraag {
+	 rekenmoduleAanvraagFileName String,
+     //aanvraagbericht Aanvraagbericht,
+     
+}
+relationship OneToOne {
+	 RekenmoduleAanvraag {aanvraagbericht} to AanvraagBericht {rekenmoduleAanvraag},
+     RekenmoduleAanvraag {assesment} to Assesment {rekenmoduleAanvraag} 
+}
+
+
+/**
+* Rekenmodule XML: part of xml file representation.
+*
+*  Main entry of rekenmodule aanvraag xml file with the request. 
+*  XML Tag 
+*/ 
+entity AanvraagBericht {
+    //header Header,
+    //algemeen Algemeen,
+    //fdnAanvrager List<FdnAanvrager>,
+	//kredietAanvraag List<KredietAanvraag>,
+	//vrijeTekst List<VrijeTekst>
+}
+relationship OneToOne  { AanvraagBericht {header}          to Header {aanvraagbericht} } 
+relationship OneToOne  { AanvraagBericht {algemeen}        to Algemeen {aanvraagbericht}} 
+relationship OneToMany { AanvraagBericht {fdnAanvrager}    to FdnAanvrager {aanvraagbericht}}
+relationship OneToMany { AanvraagBericht {kredietAanvraag} to KredietAanvraag {aanvraagbericht}}
+relationship OneToMany { AanvraagBericht {vrijeTekst}      to VrijeTekst {aanvraagbericht}} 
+
+/**
+* Rekenmodule XML: part of xml file representation.
+*
+* 1 Header allowed per <Aanvraagbericht>
+*/
+entity Header {
+	emailZender String,
+    emailOntvanger String,
+    ontvangerNaam String,
+    lognaam String,
+    messageRef String,
+    berichtVersie Integer,
+    verzendDt LocalDate,
+    verzendTijd LocalDate
+}
+
+/**
+* Rekenmodule XML: part of xml file representation.
+*
+* 1 Algemeen allowed per <Aanvraagbericht>
+*/
+entity Algemeen {
+	viewcode String,
+    versiecode String,
+    valuta String,
+    aanvraagVersie Long,
+    aanvraagVolgNr Long,
+    tussenpersoonNr Long,
+    bedrijfsnaamTp String,
+    contactPersoonTp String,
+    maatschappij String,
+    registratieDt LocalDate,
+    subagentNr Long,
+    verkopersNaam String
+}
+
+/**
+* Rekenmodule XML: part of xml file representation.
+*
+* 0..n of FdnAanvrager allowed per <Aanvraagbericht>
+*/
+entity FdnAanvrager {
+ 	volgnummer Long,
+    
+    soortAanvrager String,
+    achterNaam String,
+    voorletters String,
+    gebNaam String,
+    woonachtigHuidigDt LocalDate,
+    telBereikbaar String,
+    telefoonNrPrive String,
+    iban String,
+    geboorteDt LocalDate,
+    nationaliteit String,
+    geslacht String,
+    sociaalFiscaalNr String,
+    relatieTp String
+    //adres
+    //legitimatiebewijs
+    //werksituatie
+    //gezinsituatie
+    //financieleSituatie
+}
+/**
+* Rekenmodule XML: part of xml file representation.
+*/
+entity Adres {
+ 	volgnummer Long,
+    
+	soortAdres	String,
+	straatNaam	String,
+	huisNr		String,
+	plaatsNaam	String,
+	postcode	String,
+	land		String
+}
+/**
+* Rekenmodule XML: part of xml file representation.
+*/
+entity Legitimatiebewijs {
+ 	volgnummer Long,
+    
+    soort	String,
+    land	String
+}
+/**
+* Rekenmodule XML: part of xml file representation.
+*/
+entity Werksituatie {
+	volgnummer Long
+    
+    beroep	String,
+    aardDienstverband	String,
+    beginDienstverbandDt	LocalDate,
+}
+/**
+* Rekenmodule XML: part of xml file representation.
+*/
+entity NawWerkgeverUitkerendeInstantie {
+	volgnummer Long,
+    
+    naam	String,
+    plaatsNaam	String
+}
+relationship OneToMany { Werksituatie {nawWerkgeverUitkerendeInstantie} to NawWerkgeverUitkerendeInstantie {werksituatie}}
+entity Gezinssituatie {
+	volgnummer Long,
+    
+    burgerlijkeStaat	String,
+	huwelijkseVw		String,	
+	huwelijkOntbonden	String,
+	weduweWeduwnaar		String,	
+	kinderenAantal	Integer
+}
+/**
+* Rekenmodule XML: part of xml file representation.
+*/
+entity FinancieleSituatie {
+	volgnummer Long,
+    
+    brutoMaandInk BigDecimal,
+	nettoMaandInk BigDecimal,
+	voorlopigeTeruggaaf String,	
+	eigenWoning	String,	
+	hypotheek String,
+	brutoMndHypotheek	BigDecimal,
+	lopendeLeningen	String,
+	woonsituatie	String,
+	woonlasten	BigDecimal
+}
+relationship OneToMany { 
+	FdnAanvrager {adres}              to Adres {fdnAanvrager}
+    FdnAanvrager {legitimatiebewijs}  to Legitimatiebewijs {fdnAanvrager}
+    FdnAanvrager {werksituatie}       to Werksituatie {fdnAanvrager}
+    FdnAanvrager {gezinssituatie}     to Gezinssituatie {fdnAanvrager}
+    FdnAanvrager {financieleSituatie} to FinancieleSituatie {fdnAanvrager}
+}
+/**
+* Rekenmodule XML: part of xml file representation.
+* 0..n of KredietAanvraag allowed per <Aanvraagbericht>
+*/
+entity KredietAanvraag {
+	volgnummer Long,
+    
+    duurInMnd String,
+    soortAanvraag String,
+    produktCodeNaam String,
+    leningBedrag BigDecimal,
+    mndAflosBedrag BigDecimal,
+    gevrBedrInHanden BigDecimal,
+    zekerheid String,
+    bestedingsdoel String,			
+    merkObject String,
+    typeObject String,
+	bouwjaarObject String,
+    koopsomWaardeObj String,
+    kenteken String,
+    chassisnr String,
+    inruilbedrag String,
+    doelNieuw String,
+    aanbetalingbedrag BigDecimal,
+    inruilbedrag BigDecimal,				
+    modelObject	 String,
+    sparen String,
+	typeTarief String,
+    tariefNaam String,
+    soortContract String,
+    kontraktNaam String,
+    produktNr String,
+    produktCodeNaam String,
+    perspectief String,
+    nieuwGebruikt String,
+    verkoopprijs BigDecimal,
+    aanbetaling BigDecimal,			
+    overnameLopendeLening String,		
+    kredietSom BigDecimal,					
+    gMI String,						
+    overnameKentekennr String,
+    overnameFinanMy String,
+    ovvrnameContractNr String,
+    overnamePlaats String,
+    duurinMnd String,
+    restantbetaling	BigDecimal,
+    effectiveRente  String,
+    verkoper String,
+}
+//------------------------
+/**
+* Rekenmodule XML: part of xml file representation.
+* 0..n of VrijeTekst allowed per <Aanvraagbericht>
+* Make a tekst blok(s) containing severalrows of tekst.
+*/
+entity VrijeTekst {
+	volgnummer Long,
+    //TekstRegel List<String>
+}
+/**
+* 0..n Rows of text in the parent VrijeTekst
+*/
+entity TekstRegel {
+	regelnummer Long,
+    tekst String
+}
+relationship OneToMany {VrijeTekst {tekstRegel} to  TekstRegel {vrijeTekst} }
+
+//------------------------
+
+
+// Set pagination options
+paginate JobHistory, Employee with infinite-scroll
+paginate Job with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employee, Job
+// Set an angular suffix
+angularSuffix * with mySuffix
