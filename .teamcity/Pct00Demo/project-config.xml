@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="Pct00Projects" uuid="c9662871-4318-4748-be9f-a5926e51bfe2" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Pct 00 Demo</name>
+  <description>Test with a jhipster application</description>
+  <default-template ref="PsaCommonIncludingJavaTemplateBuild" />
+  <parameters>
+    <param name="file.encoding" value="UTF-8" />
+    <param name="pomfile.name" value="pom.xml" />
+    <param name="root_module.path" value="." />
+    <param name="system.buildsettings.maven.version" value="%system.maven3%" />
+  </parameters>
+  <project-extensions>
+    <extension id="PROJECT_EXT_20" type="OAuthProvider">
+      <parameters>
+        <param name="clientId" value="510b20316fe2bea15590" />
+        <param name="defaultTokenScope" value="public_repo,repo,repo:status,write:repo_hook" />
+        <param name="displayName" value="GitHub.com Ptc 00 Demo" />
+        <param name="gitHubUrl" value="https://github.com/" />
+        <param name="providerType" value="GitHub" />
+        <param name="secure:clientSecret" value="credentialsJSON:2dc295da-e062-40cd-bb93-8aface880d17" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_21" type="versionedSettings">
+      <parameters>
+        <param name="buildSettings" value="ALWAYS_USE_CURRENT" />
+        <param name="credentialsStorageType" value="credentialsJSON" />
+        <param name="enabled" value="true" />
+        <param name="rootId" value="Pct00Projects_Pct00gitGithubComE517487ptc00demoGitBranchMaster" />
+        <param name="showChanges" value="false" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+</project>
+

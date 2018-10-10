@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="7bdd1d28-af17-457b-a334-83d96ec920cd" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Integration</name>
+  <description />
+  <settings ref="PsaCommonIncludingJavaTemplateBuild">
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_6994" name="Maven install" type="PSA_Maven_Runner">
+        <parameters>
+          <param name="root_module.path" value="%root_module.path%" />
+          <param name="step.goals" value="install" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_6995" name="Quality Audit" type="PSA_Maven_Runner">
+        <parameters>
+          <param name="root_module.path" value="%root_module.path%" />
+          <param name="step.goals" value="validate sonar:sonar" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="Pct00Projects_Pct00gitGithubComE517487ptc00demoGitBranchMaster" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers />
+    <cleanup />
+  </settings>
+</build-type>
+
