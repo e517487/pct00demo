@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="7bdd1d28-af17-457b-a334-83d96ec920cd" paused="true" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="7bdd1d28-af17-457b-a334-83d96ec920cd" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
   <name>Integration</name>
   <description />
   <settings ref="PsaCommonIncludingJavaTemplateBuild">
@@ -22,7 +22,26 @@
       <vcs-entry-ref root-id="Pct00Projects_Pct00gitGithubComE517487ptc00demoGitBranchMaster" />
     </vcs-settings>
     <requirements />
-    <build-triggers />
+    <build-triggers>
+      <build-trigger id="TRIGGER_889" type="schedulingTrigger">
+        <parameters>
+          <param name="cronExpression_dm" value="*" />
+          <param name="cronExpression_dw" value="?" />
+          <param name="cronExpression_hour" value="*" />
+          <param name="cronExpression_min" value="0" />
+          <param name="cronExpression_month" value="*" />
+          <param name="cronExpression_sec" value="0" />
+          <param name="cronExpression_year" value="*" />
+          <param name="dayOfWeek" value="Sunday" />
+          <param name="enforceCleanCheckout" value="true" />
+          <param name="hour" value="9" />
+          <param name="minute" value="40" />
+          <param name="schedulingPolicy" value="daily" />
+          <param name="triggerBuildOnAllCompatibleAgents" value="false" />
+          <param name="triggerBuildWithPendingChangesOnly" value="true" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
     <cleanup />
   </settings>
 </build-type>
