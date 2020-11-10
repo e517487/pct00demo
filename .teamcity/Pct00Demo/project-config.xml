@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="Pct00Projects" uuid="c9662871-4318-4748-be9f-a5926e51bfe2" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="Pct00Projects" uuid="c9662871-4318-4748-be9f-a5926e51bfe2" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2020.1/project-config.xsd">
   <name>Pct 00 Demo</name>
   <description>Test with a jhipster application</description>
   <default-template ref="PsaCommonIncludingJavaTemplateBuild" />
